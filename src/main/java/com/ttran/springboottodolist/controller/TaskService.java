@@ -1,13 +1,11 @@
 package com.ttran.springboottodolist.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-
 import com.ttran.springboottodolist.model.Task;
 import com.ttran.springboottodolist.model.TaskRepo;
 
@@ -28,8 +26,8 @@ public class TaskService {
 
     public ResponseEntity<String> addTask(Task task){
         try{
-            String addsql = "INSERT INTO tasks (task_item, due_date, complete_date) VALUES (?, ?, ?)";
-            int result = jt.update(addsql, task.getTaskItem(), task.getDueDate(), task.getDueDate());
+            String addsql = "INSERT INTO tasks (task_item, due_date, complete_date, completed) VALUES (?, ?, ?, ?)";
+            int result = jt.update(addsql, task.getTaskItem(), task.getDueDate(), task.getCompleteDate(), task.getCompleted());
             if(result == 1){
                 return new ResponseEntity<String>("Successfully Added Task to Database", HttpStatus.OK);
             }
@@ -55,6 +53,14 @@ public class TaskService {
         return taskRepo.findAll();
     }
 
+    public List<Task> getAllCompletedTasks(){
+        return taskRepo.findCompletedTasks();
+    }
+
+    public List<Task> getAllUnfinishedTasks(){
+        return taskRepo.findUnfinishedTasks();
+    }
+    
     public void deleteTask(int id){
         taskRepo.deleteById(id);
     }
@@ -66,7 +72,7 @@ public class TaskService {
     public ResponseEntity<?> updateTask(int id, Task task){
         if(idExists(id)){
             try{
-                taskRepo.updateTask(id, task.getTaskItem(), task.getDueDate(), task.getCompleteDate());
+                taskRepo.updateTask(id, task.getTaskItem(), task.getDueDate(), task.getCompleteDate(), task.getCompleted());
             }
             catch(Exception e){
                 return new ResponseEntity<String>("Error Updating Task: " + e.toString(), HttpStatus.BAD_REQUEST);

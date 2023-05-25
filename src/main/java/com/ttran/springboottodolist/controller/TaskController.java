@@ -1,5 +1,6 @@
 package com.ttran.springboottodolist.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+@CrossOrigin("*")
 @RestController
 public class TaskController{
     @Autowired
@@ -35,17 +37,13 @@ public class TaskController{
         return taskMap;
     }
 
-    @GetMapping("/")
-    public String homePage(){
-        return "Welcome!";
-    }
-
     @PostMapping(value="/addTask", consumes=MediaType.APPLICATION_JSON_VALUE)   
     public ResponseEntity<?> addTask(@RequestBody Task task){
         Task addTask = new Task();
         addTask.setTaskItem(task.getTaskItem());
         addTask.setDueDate(task.getDueDate());
         addTask.setCompleteDate(task.getCompleteDate());
+        addTask.setCompleted(task.getCompleted());
         return taskService.addTask(addTask);
     }
 
@@ -61,6 +59,16 @@ public class TaskController{
     @GetMapping(value="/getTasks", produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllTasks(String id){
         return ResponseEntity.ok(taskService.getAllTasks());
+    }
+
+    @GetMapping(value="/getCompletedTasks", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllCompletedTasks(String id){
+        return ResponseEntity.ok(taskService.getAllCompletedTasks());
+    }
+
+    @GetMapping(value="/getUnfinishedTasks", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllUnfinishedTasks(String id){
+        return ResponseEntity.ok(taskService.getAllUnfinishedTasks());
     }
 
     @DeleteMapping(value="/deleteTask/{id}")

@@ -17,15 +17,19 @@ public class Task {
     private String taskItem;
 
     @Column
-    private int dueDate;
+    private long dueDate;
 
     @Column
-    private int completeDate;
+    private long completeDate;
 
-    public Task(String taskItem, int dueDate, int completeDate){
+    @Column
+    private boolean completed;
+
+    public Task(String taskItem, long dueDate, long completeDate, boolean completed){
         this.taskItem = taskItem;
         this.dueDate = dueDate;
         this.completeDate = completeDate;
+        this.completed = completed;
     }
 
     public Task(){
@@ -45,20 +49,28 @@ public class Task {
         this.taskItem = taskItem;
     }
 
-    public int getDueDate(){
+    public long getDueDate(){
         return this.dueDate;
     }
 
-    public void setDueDate(int dueDate){
+    public void setDueDate(long dueDate){
         this.dueDate = dueDate;
     }
 
-    public int getCompleteDate(){
+    public long getCompleteDate(){
         return this.completeDate;
     }
 
-    public void setCompleteDate(int completeDate){
+    public void setCompleteDate(long completeDate){
         this.completeDate = completeDate;
+    }
+
+    public boolean getCompleted(){
+        return this.completed;
+    }
+
+    public void setCompleted(boolean completed){
+        this.completed = completed;
     }
 
 }

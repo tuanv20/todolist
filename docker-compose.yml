@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  server:
+      build:
+        dockerfile: Dockerfile
+      image: springboot-todolist
+      ports:
+        - "8081:8081"
+      environment:
+        - spring.datasource.url=jdbc:mysql://mysqlcontainer:3306/tasks
+      networks:
+        - springmysql-net
+      depends_on:
+        - mysqldb
+
+  mysqldb:
+    container_name: mysqlcontainer 
+    image: "mysql:5.7"
+    restart: always
+    ports:
+      - "3307:3306"
+    #Defines ENV variables for mysql database
+    environment: 
+      MYSQL_DATABASE: tasks
+      MYSQL_ROOT_PASSWORD: London24!  
+      MYSQL_USER: user
+      MYSQL_PASSWORD: London24!
+    networks:
+      - springmysql-net
+    volumes: 
+    - dbvol:/var/lib/mysql
+    #Binds local init sql file to docker init entrypoint in container to be run when container starts
+    - ./docker_mount/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+
+volumes:
+  dbvol:
+networks:
+  springmysql-net:
