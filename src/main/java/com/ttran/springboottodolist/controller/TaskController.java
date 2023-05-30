@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.ttran.springboottodolist.model.Task;
-
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +26,15 @@ public class TaskController{
     public TaskController(TaskService taskService){
         this.taskService = taskService;
     }
+
+    // public void addViewControllers(ViewControllerRegistry registry) {
+    //     registry.addViewController("/{spring:^[a-zA-Z\\d-_]+}")
+    //             .setViewName("forward:/index.html");
+    //     registry.addViewController("/**/{spring:^[a-zA-Z\\d-_]+}")
+    //             .setViewName("forward:/index.html");
+    //     registry.addViewController("/{spring:^[a-zA-Z\\d-_]+}/**{spring:?!(\\.js|\\.css)$}")
+    //             .setViewName("forward:/index.html");
+    // }
 
     @ResponseBody
     public Object getTaskJson(Task task){
