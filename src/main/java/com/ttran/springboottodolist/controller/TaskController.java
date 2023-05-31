@@ -17,7 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@CrossOrigin("*")
+@CrossOrigin("localhost:8081")
 @RestController
 public class TaskController{
     @Autowired
