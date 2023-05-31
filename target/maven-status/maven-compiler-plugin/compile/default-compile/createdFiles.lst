@@ -1,0 +1,5 @@
+com\ttran\springboottodolist\controller\TaskController.class
+com\ttran\springboottodolist\model\Task.class
+com\ttran\springboottodolist\controller\TaskService.class
+com\ttran\springboottodolist\SpringbootTodolistApplication.class
+com\ttran\springboottodolist\model\TaskRepo.class
