@@ -22,4 +22,7 @@ public interface TaskRepo extends JpaRepository<Task, Integer>{
     @Query(value="SELECT * FROM tasks WHERE completed=false", nativeQuery=true)
     List<Task> findUnfinishedTasks();
 
+    @Query(value="SELECT * FROM tasks WHERE task_item LIKE %?1%", nativeQuery = true)
+    List<Task> findTasksByString(String searchStr);
+
 }

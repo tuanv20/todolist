@@ -26,16 +26,6 @@ public class TaskController{
     public TaskController(TaskService taskService){
         this.taskService = taskService;
     }
-
-    // public void addViewControllers(ViewControllerRegistry registry) {
-    //     registry.addViewController("/{spring:^[a-zA-Z\\d-_]+}")
-    //             .setViewName("forward:/index.html");
-    //     registry.addViewController("/**/{spring:^[a-zA-Z\\d-_]+}")
-    //             .setViewName("forward:/index.html");
-    //     registry.addViewController("/{spring:^[a-zA-Z\\d-_]+}/**{spring:?!(\\.js|\\.css)$}")
-    //             .setViewName("forward:/index.html");
-    // }
-
     @ResponseBody
     public Object getTaskJson(Task task){
         HashMap<String, Object> taskMap = new HashMap<String, Object>();
@@ -78,6 +68,11 @@ public class TaskController{
     @GetMapping(value="/getUnfinishedTasks", produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllUnfinishedTasks(String id){
         return ResponseEntity.ok(taskService.getAllUnfinishedTasks());
+    }
+
+    @GetMapping(value="/getTasksByString/{searchStr}", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getTasksByString(@PathVariable String searchStr){
+        return ResponseEntity.ok(taskService.getTasksByString(searchStr));
     }
 
     @DeleteMapping(value="/deleteTask/{id}")

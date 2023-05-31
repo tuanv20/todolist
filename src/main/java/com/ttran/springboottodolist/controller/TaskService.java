@@ -60,6 +60,10 @@ public class TaskService {
     public List<Task> getAllUnfinishedTasks(){
         return taskRepo.findUnfinishedTasks();
     }
+
+    public List<Task> getTasksByString(String searchStr){
+        return taskRepo.findTasksByString(searchStr);
+    }
     
     public void deleteTask(int id){
         taskRepo.deleteById(id);
