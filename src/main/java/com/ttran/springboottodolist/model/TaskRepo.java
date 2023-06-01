@@ -16,11 +16,11 @@ public interface TaskRepo extends JpaRepository<Task, Integer>{
     @Query("UPDATE Task t set t.taskItem = ?2, t.dueDate = ?3, t.completeDate = ?4, t.completed = ?5 WHERE id=?1")
     void updateTask(int task_id, String task_item, long due_date, long complete_date, boolean completed);
 
-    @Query(value="SELECT * FROM tasks WHERE completed=true", nativeQuery=true)
-    List<Task> findCompletedTasks();
+    @Query(value="SELECT * FROM tasks WHERE task_item LIKE %?1 AND completed=true", nativeQuery=true)
+    List<Task> findCompletedTasks(String searchStr);
 
-    @Query(value="SELECT * FROM tasks WHERE completed=false", nativeQuery=true)
-    List<Task> findUnfinishedTasks();
+    @Query(value="SELECT * FROM tasks WHERE task_item LIKE %?1% AND completed=false", nativeQuery=true)
+    List<Task> findUnfinishedTasks(String searchStr);
 
     @Query(value="SELECT * FROM tasks WHERE task_item LIKE %?1%", nativeQuery = true)
     List<Task> findTasksByString(String searchStr);

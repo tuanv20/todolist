@@ -49,21 +49,30 @@ public class TaskService {
         return null;
     }
 
-    public List<Task> getAllTasks(){
-        return taskRepo.findAll();
-    }
-
-    public List<Task> getAllCompletedTasks(){
-        return taskRepo.findCompletedTasks();
-    }
-
-    public List<Task> getAllUnfinishedTasks(){
-        return taskRepo.findUnfinishedTasks();
-    }
-
-    public List<Task> getTasksByString(String searchStr){
+    public List<Task> getAllTasks(String searchStr){
+        if(searchStr == ""){
+            return taskRepo.findTasksByString("%");
+        }
         return taskRepo.findTasksByString(searchStr);
     }
+
+    public List<Task> getAllCompletedTasks(String searchStr){
+        if(searchStr == ""){
+            return taskRepo.findCompletedTasks("%");
+        }
+        return taskRepo.findCompletedTasks(searchStr);
+    }
+
+    public List<Task> getAllUnfinishedTasks(String searchStr){
+        if(searchStr == ""){
+            return taskRepo.findUnfinishedTasks("%");
+        }
+        return taskRepo.findUnfinishedTasks(searchStr);
+    }
+
+    // public List<Task> getTasksByString(String searchStr){
+    //     return taskRepo.findTasksByString(searchStr);   
+    // }
     
     public void deleteTask(int id){
         taskRepo.deleteById(id);

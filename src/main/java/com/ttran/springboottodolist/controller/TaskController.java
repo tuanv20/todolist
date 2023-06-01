@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ttran.springboottodolist.model.Task;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import java.util.HashMap;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -55,25 +57,40 @@ public class TaskController{
         return ResponseEntity.ok(getTaskJson(reqTask));
     }
 
-    @GetMapping(value="/getTasks", produces= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllTasks(String id){
-        return ResponseEntity.ok(taskService.getAllTasks());
+    @GetMapping(value="/getTasks/{searchStr}", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllTasks(@PathVariable Optional<String> searchStr){
+        return ResponseEntity.ok(taskService.getAllTasks(searchStr.get()));
+    }
+    
+    @GetMapping(value="/getTasks/", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllTasks(){
+        return ResponseEntity.ok(taskService.getAllTasks(""));
     }
 
-    @GetMapping(value="/getCompletedTasks", produces= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllCompletedTasks(String id){
-        return ResponseEntity.ok(taskService.getAllCompletedTasks());
+    @GetMapping(value="/getCompletedTasks/{searchStr}", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllCompletedTasks(@PathVariable String searchStr){
+        return ResponseEntity.ok(taskService.getAllCompletedTasks(searchStr));
     }
 
-    @GetMapping(value="/getUnfinishedTasks", produces= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllUnfinishedTasks(String id){
-        return ResponseEntity.ok(taskService.getAllUnfinishedTasks());
+    @GetMapping(value="/getCompletedTasks/", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllCompletedTasks(){
+        return ResponseEntity.ok(taskService.getAllCompletedTasks(""));
     }
 
-    @GetMapping(value="/getTasksByString/{searchStr}", produces= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getTasksByString(@PathVariable String searchStr){
-        return ResponseEntity.ok(taskService.getTasksByString(searchStr));
+    @GetMapping(value="/getUnfinishedTasks/{searchStr}", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllUnfinishedTasks(@PathVariable String searchStr){
+        return ResponseEntity.ok(taskService.getAllUnfinishedTasks(searchStr));
     }
+
+    @GetMapping(value="/getUnfinishedTasks/", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllUnfinishedTasks(){
+        return ResponseEntity.ok(taskService.getAllUnfinishedTasks(""));
+    }
+
+    // @GetMapping(value="/getTasksByString/{searchStr}", produces= MediaType.APPLICATION_JSON_VALUE)
+    // public ResponseEntity<?> getTasksByString(@PathVariable String searchStr){
+    //     return ResponseEntity.ok(taskService.getTasksByString(searchStr));
+    // }
 
     @DeleteMapping(value="/deleteTask/{id}")
     public ResponseEntity<?> deleteTask(@PathVariable String id){
