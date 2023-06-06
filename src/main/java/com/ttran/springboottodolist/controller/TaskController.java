@@ -20,7 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 //Annotation to get around CORS policy issues
-@CrossOrigin("localhost:8081")
+@CrossOrigin("localhost")
 @RestController
 
 // Controller Class that defines all of the endpoints for the tasklist CRUD operations 
