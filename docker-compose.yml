@@ -2,26 +2,33 @@ version: "3.8"
 services:
   server:
       build:
+        #Specifying build Dockerfile for Springboot App 
         dockerfile: Dockerfile
       image: springboot-todolist
       ports:
         - "8081:8081"
+        #Defining the database to reference 
       environment:
         - spring.datasource.url=jdbc:mysql://mysqlcontainer:3306/tasks
       networks:
         - springmysql-net
+        #Ensures that db loads up before server
       depends_on:
         - mysqldb
 
   mysqldb:
     container_name: mysqlcontainer 
     image: "mysql:5.7"
+    #Always restart containers if they are not manually stopped
     restart: always
+    # Local port mapped to container port, this means the database can be referenced at localhost:3307 
+    # on local environment (MySQL workbench will use this)
     ports:
       - "3307:3306"
     #Defines ENV variables for mysql database
     environment: 
       MYSQL_DATABASE: tasks
+      #Probably should create env variables for this 
       MYSQL_ROOT_PASSWORD: London24!  
       MYSQL_USER: user
       MYSQL_PASSWORD: London24!

@@ -9,8 +9,13 @@ import org.springframework.stereotype.Service;
 import com.ttran.springboottodolist.model.Task;
 import com.ttran.springboottodolist.model.TaskRepo;
 
+
+//Service class that handles business logic of endpoints. Either
+//queries the MySQL database using JdbcTemplate object or directly 
+//calls the TaskRepo JPARepository (for custom queries)
 @Service
 public class TaskService {
+    //Dependency Injections 
     @Autowired
 	private JdbcTemplate jt;
     private TaskRepo taskRepo;
@@ -38,7 +43,6 @@ public class TaskService {
             return new ResponseEntity<String>("Error Inserting Task to Database: " + e.toString(), HttpStatus.BAD_REQUEST);
         }
     }
-
 
     //Checks if task's id exists, if it does returns it using JPARepository 
     public Task getTaskByID(int id){
@@ -70,10 +74,6 @@ public class TaskService {
         return taskRepo.findUnfinishedTasks(searchStr);
     }
 
-    // public List<Task> getTasksByString(String searchStr){
-    //     return taskRepo.findTasksByString(searchStr);   
-    // }
-    
     public void deleteTask(int id){
         taskRepo.deleteById(id);
     }

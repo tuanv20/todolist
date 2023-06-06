@@ -19,15 +19,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+//Annotation to get around CORS policy issues
 @CrossOrigin("localhost:8081")
 @RestController
+
+// Controller Class that defines all of the endpoints for the tasklist CRUD operations 
+// and directly calls the TaskService object to handle the business logic
 public class TaskController{
+    //Definition and Dependency injection for TaskService object 
     @Autowired
 	private TaskService taskService;
 
     public TaskController(TaskService taskService){
         this.taskService = taskService;
     }
+
+    //Converts task into JSON format that is digestible by frontend 
     @ResponseBody
     public Object getTaskJson(Task task){
         HashMap<String, Object> taskMap = new HashMap<String, Object>();
@@ -86,11 +93,6 @@ public class TaskController{
     public ResponseEntity<?> getAllUnfinishedTasks(){
         return ResponseEntity.ok(taskService.getAllUnfinishedTasks(""));
     }
-
-    // @GetMapping(value="/getTasksByString/{searchStr}", produces= MediaType.APPLICATION_JSON_VALUE)
-    // public ResponseEntity<?> getTasksByString(@PathVariable String searchStr){
-    //     return ResponseEntity.ok(taskService.getTasksByString(searchStr));
-    // }
 
     @DeleteMapping(value="/deleteTask/{id}")
     public ResponseEntity<?> deleteTask(@PathVariable String id){

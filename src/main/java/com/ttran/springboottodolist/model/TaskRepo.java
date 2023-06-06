@@ -7,11 +7,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import jakarta.transaction.Transactional;
 
+//JPARepository interface that contains predefined queries for MySQL 
+//database as well as custom implemented queries
+
 @Repository
 public interface TaskRepo extends JpaRepository<Task, Integer>{
     //For some reason the query values need to match the values in the Entity file (taskItem instead of task_item)
     //Also, a PUT request uses these values too 
+
+    //Modifying annotation for any queries that edit the database
     @Modifying
+    //Automatically handles data integrity during system failure so we can just focus on business logic
     @Transactional
     @Query("UPDATE Task t set t.taskItem = ?2, t.dueDate = ?3, t.completeDate = ?4, t.completed = ?5 WHERE id=?1")
     void updateTask(int task_id, String task_item, long due_date, long complete_date, boolean completed);

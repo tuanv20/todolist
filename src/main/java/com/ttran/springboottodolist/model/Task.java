@@ -7,9 +7,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+
+// Entity class that models the task object data
+// Standard data class with getters and setters 
 @Entity
 @Table(name="tasks")
 public class Task {
+    //Auto-increment id value 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
